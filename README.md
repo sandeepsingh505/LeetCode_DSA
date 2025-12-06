@@ -3,13 +3,13 @@
 This repository contains my solutions to LeetCode problems.
 I solve problems daily to improve my understanding of Data Structures, Algorithms, and Problem-Solving.
 
-##What’s Inside
+# # What’s Inside
 Clean, optimized solutions
 Categorized by difficulty and topic
 Written in Python / Java (update if needed)
 Includes comments and time–space complexity (where applicable)
 
-##🧩 Topics Covered
+# #  Topics Covered
 Arrays
 Strings
 HashMap / HashSet
