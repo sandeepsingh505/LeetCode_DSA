@@ -16,17 +16,23 @@
 
 class Solution {
     static int dia;
-    public int height(TreeNode root){
+    public int height(TreeNode root,Map<TreeNode,Integer> dp){
         if(root==null)return 0;
-        int left = height(root.left);
-        int right = height(root.right);
-        int path = left + right ;
-        dia = Math.max(dia,path);
-        return 1 + Math.max(left,right);
+        if(dp.containsKey(root)) return dp.get(root);
+        int left = height(root.left,dp);
+        int right = height(root.right,dp);
+        dp.put(root,1 + Math.max(left,right));
+        return dp.get(root);
     }
-    public int diameterOfBinaryTree(TreeNode root) {
-         dia = 0;
-        height(root);
-        return dia;
+    public int diameter(TreeNode root,Map<TreeNode,Integer> dp){
+        if(root==null)return 0;
+        int dia = height(root.left,dp) + height(root.right,dp);
+        int leftdia = diameter(root.left,dp);
+        int rightdia = diameter(root.right,dp);
+        return Math.max(dia,Math.max(leftdia,rightdia));
+    }
+    public int diameterOfBinaryTree(TreeNode root){
+         Map<TreeNode,Integer> dp = new HashMap<>();
+         return diameter(root,dp);
     }
 }
