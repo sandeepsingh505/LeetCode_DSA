@@ -1,21 +1,18 @@
 class Solution {
-    public int helper(int row,int col,int m ,int n,int [][]dp){
-        if(row >= m || col>=n)return 0;
-        if(row==m-1 && col==n-1) return 1;
-        if(dp[row][col]!=-1){
-            return dp[row][col];
-        }
-        int right = helper(row,col+1,m,n,dp);
-        int down = helper(row+1,col,m,n,dp);
-        dp[row][col] = right + down;
-        return dp[row][col];
-    }
+ public int path(int i,int j,int[][]grid,int m ,int n,int dp[][]){
+    if(i>=m || j>=n) return 0;
+    if(i==m-1 && j==n-1) return 1;
+    if(dp[i][j]!=-1) return dp[i][j];
+    int down = path(i+1,j,grid,m,n,dp);
+    int right = path(i,j+1,grid,m,n,dp);
+    return dp[i][j] = down + right;
+    
+ }
     public int uniquePaths(int m, int n) {
-     int [][] dp = new int[m][n];
-      for(int val[]:dp){
-        Arrays.fill(val,-1);
-      }
-     return helper(0,0,m,n,dp);
+        int grid[][] = new int[m][n];
+        int dp[][] = new int[m][n];
+        for(int[]row : dp) Arrays.fill(row,-1);
+        return path(0,0,grid,m,n,dp);
         
     }
 }
