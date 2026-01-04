@@ -14,18 +14,20 @@
  * }
  */
 class Solution {
+    static int maxdia;
     public int level(TreeNode root){
         if(root==null) return 0;
         int lst = level(root.left);
         int rst = level(root.right);
+        int dia = lst + rst;
+        maxdia = Math.max(maxdia,dia);
         return  1 + Math.max(lst,rst);
     }
     public int diameterOfBinaryTree(TreeNode root) {
-        if(root == null) return 0;
-        int mydia = level(root.left) + level(root.right);
-        int lstdia = diameterOfBinaryTree(root.left);
-        int rstdia = diameterOfBinaryTree(root.right);
-        return Math.max(mydia,Math.max(lstdia,rstdia));
+        maxdia = 0;
+        level(root);
+        return maxdia;
+      
         
 
         
