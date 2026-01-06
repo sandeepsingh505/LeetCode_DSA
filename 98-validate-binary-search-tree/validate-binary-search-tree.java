@@ -20,7 +20,6 @@ class Solution {
     Long leftmin = min(root.left);
     Long rightmin = min(root.right);
     if(rightmin<=root.val) flag = false;
-
     return Math.min(root.val,Math.min(leftmin,rightmin));
    
 }
@@ -28,18 +27,17 @@ public static long max(TreeNode root){
     if(root==null) return Long.MIN_VALUE;
     Long leftmax = max(root.left);
     if(leftmax>=root.val) flag = false;
-
     Long rightmax = max(root.right);
     return Math.max(root.val,Math.max(leftmax,rightmax));
     
 }
     // method 1 : inorder se 
-    public void inorder(TreeNode root,List<Integer> ans){
-        if(root==null) return ;
-        inorder(root.left,ans);
-        ans.add(root.val);
-        inorder(root.right,ans);
-    }
+    // public void inorder(TreeNode root,List<Integer> ans){
+    //     if(root==null) return ;
+    //     inorder(root.left,ans);
+    //     ans.add(root.val);
+    //     inorder(root.right,ans);
+    // }
 
     public boolean isValidBST(TreeNode root) {
         if(root==null) return true;
