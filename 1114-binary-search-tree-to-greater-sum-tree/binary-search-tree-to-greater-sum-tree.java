@@ -14,18 +14,18 @@
  * }
  */
 class Solution { 
-    static int sum;
-    public void inorder(TreeNode root){
+    // static int sum;
+    public void inorder(TreeNode root,int[] sum ){
         if(root==null) return ;
-        inorder(root.right);
-        root.val += sum;
-        sum = root.val;
-        inorder(root.left);
+        inorder(root.right,sum);
+        root.val += sum[0];
+        sum[0] = root.val;
+        inorder(root.left,sum);
     }
     public TreeNode bstToGst(TreeNode root) {
         if(root==null) return null;
-        sum = 0;
-        inorder(root);
+        int[] sum = {0};
+        inorder(root,sum);
         return root;
         
     }
