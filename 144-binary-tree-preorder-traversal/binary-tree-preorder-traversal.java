@@ -15,17 +15,33 @@
  */
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
+        // Morris traversal
+         TreeNode curr = root;
         List<Integer> ans = new ArrayList<>();
-        Stack<TreeNode> st = new Stack<>();
-        if(root!=null)st.push(root);
-        while(st.size()>0){
-          TreeNode top = st.pop();   // pop remove + print bhi krta hai 
-          ans.add(top.val);
-          if(top.right!=null) st.push(top.right);
-          if(top.left!=null) st.push(top.left);
+        while(curr!=null){
+            if(curr.left!=null){
+                TreeNode pred = curr.left;
+               while(pred.right!=null && pred.right!=curr){
+                    pred = pred.right;
+                }
+                if(pred.right==null){
+                    ans.add(curr.val);
+                    pred.right = curr;
+                    curr = curr.left;
 
+                }else{
+                    curr = curr.right;
+                    pred.right = null;
+                }
+
+            }
+            else{
+                ans.add(curr.val);
+                curr = curr.right;
+            }
         }
         return ans;
+        
         
     }
 }
