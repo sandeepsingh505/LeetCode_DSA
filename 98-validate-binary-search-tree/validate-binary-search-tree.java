@@ -1,32 +1,38 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
-    public void inorder(TreeNode root,List<Integer> ans){
-        if(root==null) return ;
-        inorder(root.left,ans);
-        ans.add(root.val);
-        inorder(root.right,ans);
-    }
-    public boolean isValidBST(TreeNode root) {
-        List<Integer> ans = new ArrayList<>();
-        inorder(root,ans);
-        for(int i = 1;i<ans.size();i++){
-            if(ans.get(i)<=ans.get(i-1)) return false;
+
+    public int min(TreeNode root) {
+        if (root == null) return Integer.MAX_VALUE;
+        while (root.left != null) {
+            root = root.left;
         }
-        return true;
-        
+        return root.val;
+    }
+
+    public int max(TreeNode root) {
+        if (root == null) return Integer.MIN_VALUE;
+        while (root.right != null) {
+            root = root.right;
+        }
+        return root.val;
+    }
+
+    public boolean helper(TreeNode root) {
+
+        // ✅ empty tree is valid BST
+        if (root == null) return true;
+
+        // ✅ check current node with left & right subtree
+        if (root.left != null && root.val <= max(root.left))
+            return false;
+
+        if (root.right != null && root.val >= min(root.right))
+            return false;
+
+        // ✅ recursively check left & right subtree
+        return helper(root.left) && helper(root.right);
+    }
+
+    public boolean isValidBST(TreeNode root) {
+        return helper(root);
     }
 }
