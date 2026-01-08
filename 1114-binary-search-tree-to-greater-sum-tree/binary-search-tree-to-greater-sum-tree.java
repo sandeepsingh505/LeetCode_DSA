@@ -13,20 +13,20 @@
  *     }
  * }
  */
-class Solution { 
-    // static int sum;
-    public void inorder(TreeNode root,int[] sum ){
+class Solution {
+    public void inorder(TreeNode root,List<TreeNode> ans){
         if(root==null) return ;
-        inorder(root.right,sum);
-        root.val += sum[0];
-        sum[0] = root.val;
-        inorder(root.left,sum);
+        inorder(root.left,ans);
+        ans.add(root);
+        inorder(root.right,ans);
     }
     public TreeNode bstToGst(TreeNode root) {
-        if(root==null) return null;
-        int[] sum = {0};
-        inorder(root,sum);
+        List<TreeNode> ans  = new ArrayList<>();
+        inorder(root,ans);
+        int n = ans.size();
+        for(int i = n-2;i>=0;i--){
+            ans.get(i).val += ans.get(i+1).val;
+        }
         return root;
-        
     }
 }
