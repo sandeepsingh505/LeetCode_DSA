@@ -27,6 +27,7 @@ class Solution {
             int n = grid[0].length;
             Queue<Pair> q = new LinkedList<>();
             q.add(new Pair(row,col));
+            visited[row][col] = true;
             while(q.size()>0){
                 Pair top = q.remove();
                 int a = top.row , b = top.col;
