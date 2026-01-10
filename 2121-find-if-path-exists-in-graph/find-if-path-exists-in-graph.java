@@ -13,23 +13,15 @@ class Solution {
     }
      boolean visited[] = new boolean[n];
      visited[start] = true;
-    bfs(start,adj,visited);
+    dfs(start,adj,visited);
         
      return visited[end];
     }
 
-    public void bfs(int start,List<List<Integer>> adj,boolean[]visited){
-        Queue<Integer> q = new LinkedList<>();
-        q.add(start);
-       
-        while(q.size()>0){
-            int top = q.remove();
-               for(int ele : adj.get(top)){
-                if(!visited[ele]){
-                    q.add(ele);
-                    visited[ele] = true;
-                }
-            }
-        }
-    }
+    public void dfs(int start,List<List<Integer>> adj,boolean[]visited){
+       visited[start] = true;
+       for(int ele : adj.get(start)){
+        if(!visited[ele]) dfs(ele,adj,visited);
+       } 
+}
 }
