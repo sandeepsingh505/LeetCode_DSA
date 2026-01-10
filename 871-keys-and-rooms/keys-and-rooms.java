@@ -5,7 +5,7 @@ class Solution {
        visited[0] = true;
         for(int i = 0;i<n;i++){
             if(!visited[i]){
-                bfs(0,adj,visited);
+                dfs(0,adj,visited);
             }
         }
         
@@ -14,18 +14,10 @@ class Solution {
         }
         return true;
     }
-    public void bfs(int start,List<List<Integer>> adj,boolean[]visited){
-        Queue<Integer> q = new LinkedList<>();
-        visited[start] = true;
-        q.add(start);
-        while(q.size()>0){
-            int top = q.remove();
-            for(int ele: adj.get(top)){
-                if(!visited[ele]){
-                    q.add(ele);
-                    visited[ele] = true;
-                }
-            }
-        }
+   public void dfs(int start,List<List<Integer>> adj,boolean[]visited){
+    visited[start] = true;
+    for(int ele : adj.get(start)){
+        if(!visited[ele]) dfs(ele,adj,visited);
     }
+   }
 }
