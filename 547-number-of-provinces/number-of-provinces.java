@@ -5,26 +5,20 @@ class Solution {
         boolean[] visited = new boolean[n];
         for(int i = 0;i<n;i++){
             if(!visited[i]){
-                bfs(i,visited,adjmatrix);
+                dfs(i,adjmatrix,visited);
                 count++;
             }
         }
         return count;
         
     }
-    public void bfs(int start,boolean[]visited,int[][]matrix){
-        int n = matrix.length;
-        Queue<Integer> q = new LinkedList<>();
-        q.add(start);
+    
+    public void dfs(int start,int[][]adj,boolean[]visited){
         visited[start] = true;
-        while(q.size()>0){
-            int top = q.remove();
-            for(int i = 0;i<n;i++){
-                if(matrix[top][i]==1 && visited[i]==false){
-                    q.add(i);
-                    visited[i] = true;
-                }
+        for(int i = 0;i<adj.length;i++){
+            if(!visited[i]&& adj[start][i]==1){
+                dfs(i,adj,visited);
             }
         }
     }
-}
+    }
