@@ -1,24 +1,40 @@
 class Solution {
-    public int findCircleNum(int[][] adjmatrix){
-        int n = adjmatrix.length;
-        int count = 0;
-        boolean[] visited = new boolean[n];
+    public int findCircleNum(int[][] matrix) {
+        int provinces = 0;
+         int n  = matrix.length;
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
         for(int i = 0;i<n;i++){
-            if(!visited[i]){
-                dfs(i,adjmatrix,visited);
-                count++;
+            adj.add(new ArrayList<>());
+        }
+        for(int i = 0;i<n;i++){
+            for(int j =0;j<n;j++){
+                if(matrix[i][j]==1){
+                    adj.get(i).add(j);
+                }
             }
         }
-        return count;
+        boolean[]visited = new boolean[n];
+    for(int i = 0;i<n;i++){
+        if(!visited[i]){
+            bfs(i,adj,visited);
+            provinces++;
+        }
+    }
+    return provinces;
         
     }
-    
-    public void dfs(int start,int[][]adj,boolean[]visited){
+    public void bfs(int start,ArrayList<ArrayList<Integer>> adj, boolean[]visited){
+        Queue<Integer> q = new LinkedList<>();
         visited[start] = true;
-        for(int i = 0;i<adj.length;i++){
-            if(!visited[i]&& adj[start][i]==1){
-                dfs(i,adj,visited);
+        q.add(start);
+        while(q.size()>0){
+            int top = q.remove();
+            for(int ele : adj.get(top)){
+                if(!visited[ele]){
+                    visited[ele] = true;
+                    q.add(ele);
+                } 
             }
         }
     }
-    }
+}
