@@ -16,25 +16,18 @@ class Solution {
         boolean[]visited = new boolean[n];
     for(int i = 0;i<n;i++){
         if(!visited[i]){
-            bfs(i,adj,visited);
+            dfs(i,adj,visited);
             provinces++;
         }
     }
     return provinces;
         
     }
-    public void bfs(int start,ArrayList<ArrayList<Integer>> adj, boolean[]visited){
-        Queue<Integer> q = new LinkedList<>();
+    public void dfs(int start,ArrayList<ArrayList<Integer>> adj, boolean[]visited){
         visited[start] = true;
-        q.add(start);
-        while(q.size()>0){
-            int top = q.remove();
-            for(int ele : adj.get(top)){
-                if(!visited[ele]){
-                    visited[ele] = true;
-                    q.add(ele);
-                } 
-            }
+        for(int ele : adj.get(start)){
+            if(!visited[ele]) dfs(ele,adj,visited);
         }
+        
     }
 }
