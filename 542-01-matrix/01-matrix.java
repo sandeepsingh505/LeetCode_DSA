@@ -6,7 +6,7 @@ class Solution {
             this.col = col;
         }
     }
-    public void bfs(int r,int c ,int[][]mat){
+    public void bfs(int r,int c ,boolean[][]visited,int[][]mat){
         int n = mat.length;
         int m = mat[0].length;
         Queue<Pair> q = new LinkedList<>();
@@ -16,7 +16,7 @@ class Solution {
                     q.add(new Pair(i,j));
                 }
                 else if(mat[i][j]==1){
-                    mat[i][j]=-1;
+                    visited[i][j]=true;
                 }
             
             }
@@ -29,8 +29,9 @@ class Solution {
                 for(int[]d : direction ){
                     int nr = curRow + d[0];
                     int nc = curCol + d[1];
-                    if(nr>=0 && nc>=0 && nr<n && nc<m && mat[nr][nc]==-1){
+                    if(nr>=0 && nc>=0 && nr<n && nc<m && mat[nr][nc]==1 && visited[nr][nc]==true){
                         mat[nr][nc] = mat[curRow][curCol] + 1;
+                        visited[nr][nc] = false;
                         q.add(new Pair(nr,nc));
                         
                     }
@@ -39,7 +40,10 @@ class Solution {
         }
     }
     public int[][] updateMatrix(int[][] mat) {
-        bfs(0,0,mat);
+        int n = mat.length;
+        int m = mat[0].length;
+        boolean[][]visited = new boolean[n][m];
+        bfs(0,0,visited,mat);
         return mat;
     }
 }
