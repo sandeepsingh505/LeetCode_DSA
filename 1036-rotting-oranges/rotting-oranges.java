@@ -21,7 +21,7 @@ class Solution {
                 }
             }
         }
-        if(fresh==0) return 0;
+        
         int direction[][] = {{1,0},{-1,0},{0,1},{0,-1}};
         while(q.size()>0){
             int size = q.size();
@@ -43,11 +43,14 @@ class Solution {
            if(rottanthislevel) minutes++;
         }
          
-         return fresh == 0 ? minutes : -1;
+         if(fresh==0){
+          return  minutes;
+         }
+         return -1;
     }
     public int orangesRotting(int[][] grid) {
         
-      return   bfs(0,0,grid);
+      return  bfs(0,0,grid);
     
         
     }
