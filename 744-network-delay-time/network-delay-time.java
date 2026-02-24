@@ -34,11 +34,11 @@ class Solution {
                 }
             }
         }
-        int max = 0;
+        int min = 0;
         for(int i = 1;i<=n;i++){
             if(distance[i]==Integer.MAX_VALUE) return -1;
-            max = Math.max(max,distance[i]);
+            min = Math.max(min,distance[i]);
         }
-        return max;
+        return min;
     }
 }
