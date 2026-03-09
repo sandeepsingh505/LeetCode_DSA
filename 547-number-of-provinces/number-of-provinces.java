@@ -1,33 +1,40 @@
 class Solution {
-    public int findCircleNum(int[][] matrix) {
-        int provinces = 0;
-         int n  = matrix.length;
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-        for(int i = 0;i<n;i++){
-            adj.add(new ArrayList<>());
-        }
-        for(int i = 0;i<n;i++){
-            for(int j =0;j<n;j++){
-                if(matrix[i][j]==1){
-                    adj.get(i).add(j);
-                }
-            }
-        }
-        boolean[]visited = new boolean[n];
-    for(int i = 0;i<n;i++){
-        if(!visited[i]){
-            dfs(i,adj,visited);
-            provinces++;
-        }
-    }
-    return provinces;
-        
-    }
-    public void dfs(int start,ArrayList<ArrayList<Integer>> adj, boolean[]visited){
-        visited[start] = true;
-        for(int ele : adj.get(start)){
-            if(!visited[ele]) dfs(ele,adj,visited);
-        }
-        
+    class DSU{
+        int parent[];
+       DSU(int n){
+    parent = new int[n];
+    for(int i = 0; i < n; i++){
+        parent[i] = i;
     }
 }
+        public void union(int a,int b){
+            int pa = find(a);
+            int pb = find(b);
+            if(pa!=pb) parent[pb] = pa;
+        }
+        public int find(int i){
+            if(parent[i]==i){
+                return i;
+            }
+            return parent[i] = find(parent[i]);
+        }
+
+    }
+    public int findCircleNum(int[][] isConnected) {
+        int n = isConnected.length;
+        DSU obj = new DSU(n);
+        int count = n;
+        for(int i = 0;i<n;i++){
+            for(int j = i+1;j<n;j++){
+                if(isConnected[i][j] == 1){
+              if(obj.find(i) != obj.find(j)){
+            obj.union(i, j);
+             count--;
+    }
+}
+        }
+       
+    }
+    return count;
+    }
+    }
