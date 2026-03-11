@@ -67,7 +67,7 @@ class Solution {
             size[pv] += size[pu];
         } else {
             parent[pv] = pu;
-            size[pu] += size[pu];
+            size[pv] += size[pu];
         }
     }
 }
