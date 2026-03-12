@@ -1,31 +1,24 @@
 class Solution {
-    public boolean subsetsum(int idx,int[]arr,int target,int[][]dp){
-        if(idx==arr.length){
-            if(target==0) return true;
-            else return false;
+    public boolean helper(int[]arr,int sum,int idx,Boolean[][]dp){
+        if(idx==0) return arr[0] == sum;
+        if(sum==0) return true;
+        if(dp[idx][sum]!=null) return dp[idx][sum]; 
+        if(arr[idx]<=sum){
+             dp[idx][sum] = (helper(arr,sum-arr[idx],idx-1,dp) ||helper(arr,sum,idx-1,dp));
+        }else{
+         dp[idx][sum]=helper(arr,sum,idx-1,dp);
         }
-        if(dp[idx][target]!=-1){
-           return dp[idx][target] == 1;
-        }
-        boolean skip = subsetsum(idx+1,arr,target,dp);
-        boolean ans = false;
-        if(target-arr[idx]<0) ans = skip;
-        else {
-         boolean pick = subsetsum(idx+1,arr,target-arr[idx],dp);
-          ans = pick || skip;
-        }
-        dp[idx][target] = (ans) ? 1:0;
-        return ans;
+         return dp[idx][sum];
     }
     public boolean canPartition(int[] nums) {
         int sum = 0;
-        for(int val:nums){
-             sum += val;
+        for(int ele : nums) sum += ele;
+        Boolean[][]dp = new Boolean[nums.length][(sum/2)+1];
+     for(Boolean[]row : dp)Arrays.fill(row,null);
+        if(sum%2==0){
+            return helper(nums,sum/2,nums.length-1,dp);
         }
-        if(sum %2!=0)  return false;
-        int target = sum/2;
-        int dp[][] = new int[nums.length][target+1];
-        for(int row[]:dp) Arrays.fill(row,-1);
-        return subsetsum(0,nums,target,dp);   
+        return false;
+        
     }
 }
