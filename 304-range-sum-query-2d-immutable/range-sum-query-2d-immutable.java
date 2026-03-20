@@ -9,7 +9,7 @@ class NumMatrix {
         build(matrix);
     }
     public void build(int[][]matrix){
-        if(matrix.length==0 || matrix== null || matrix[0].length==0) return;
+        // if(matrix.length==0 || matrix== null || matrix[0].length==0) return;
         for(int i = 0;i<n;i++){
             for(int j = 0;j<m;j++){
                 seg[i][j] = matrix[i][j];
@@ -17,8 +17,7 @@ class NumMatrix {
                 if(j>0) seg[i][j] += seg[i][j-1];
                 if(i>0 && j>0) seg[i][j] -= seg[i-1][j-1];
             }
-        }
-        
+        }  
     }
     
     public int sumRegion(int row1, int col1, int row2, int col2) {
