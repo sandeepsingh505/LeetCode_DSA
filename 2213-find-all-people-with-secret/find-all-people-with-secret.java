@@ -6,7 +6,7 @@ class Solution {
             if(!vis[neig.get(i)]) {
                 dfs(neig.get(i), adj, vis);
             }
-        }
+    }
     }
     public List<Integer> findAllPeople(int n, int[][] meetings, int firstPerson) {
         List<Integer> ans = new ArrayList<>();
@@ -25,7 +25,6 @@ class Solution {
                 if(!adj.containsKey(y)) adj.put(y, new ArrayList<>());
                 adj.get(x).add(y);
                 adj.get(y).add(x);
-
                 if(vis[x]) secret.add(x);
                 if(vis[y]) secret.add(y);
                 i++;
