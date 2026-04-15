@@ -8,20 +8,16 @@ public  int largestRectangleArea(int[] heights) {
 
         while (!stack.isEmpty() && currHeight < heights[stack.peek()]) {
             int height = heights[stack.pop()];
-
             int width;
             if (stack.isEmpty()) {
                 width = i;
             } else {
                 width = i - stack.peek() - 1;
             }
-
             maxArea = Math.max(maxArea, height * width);
         }
-
         stack.push(i);
     }
-
     return maxArea;
 }
 }
