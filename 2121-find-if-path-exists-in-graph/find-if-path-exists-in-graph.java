@@ -1,31 +1,30 @@
 class Solution {
     public boolean validPath(int n, int[][] edges, int source, int destination) {
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
         for(int i = 0;i<n;i++){
-            adj.add(new ArrayList<>());
+            graph.add(new ArrayList<>());
         }
         for(int i = 0;i<edges.length;i++){
-            int a = edges[i][0],b = edges[i][1];
-            adj.get(a).add(b);
-            adj.get(b).add(a);
+            int from = edges[i][0] , to = edges[i][1];
+            graph.get(from).add(to);
+            graph.get(to).add(from);
         }
         boolean[]visited = new boolean[n];
-        bfs(source,adj,visited);
-        return visited[destination];
-        
+        bfs(source,graph,visited);
+        return visited[destination]; 
     }
-    public void bfs(int start,ArrayList<ArrayList<Integer>> adj,boolean[]visited){
+    public void bfs(int start ,ArrayList<ArrayList<Integer>> adj , boolean[]visited){
         Queue<Integer> q = new LinkedList<>();
-        visited[start] = true;
         q.add(start);
+        visited[start] = true;
         while(q.size()>0){
-            int top = q.remove();
-            for(int ele : adj.get(top)){
-                if(!visited[ele]){
-                    visited[ele] = true;
-                    q.add(ele);
+            int node = q.poll();
+            for(int neigh : adj.get(node)){
+                if(!visited[neigh]){
+                    visited[neigh] = true;
+                    q.add(neigh);
                 }
             }
         }
-    }
+    } 
 }
