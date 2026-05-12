@@ -8,8 +8,8 @@ class Solution {
         }else{
          dp[idx][sum]=helper(arr,sum,idx-1,dp);
         }
-         return dp[idx][sum];
-    }
+        return dp[idx][sum];
+}
     public boolean canPartition(int[] nums) {
         int sum = 0;
         for(int ele : nums) sum += ele;
