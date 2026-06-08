@@ -1,38 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
-
-    public int min(TreeNode root) {
-        if (root == null) return Integer.MAX_VALUE;
-        while (root.left != null) {
-            root = root.left;
-        }
-        return root.val;
+    static boolean flag;
+    public Long max(TreeNode root){
+        if(root==null) return Long.MIN_VALUE;
+        Long leftmax = max(root.left);
+        if(leftmax>= root.val) flag = false;
+        Long rightmax = max(root.right);
+        return Math.max(root.val,Math.max(leftmax,rightmax));
     }
-
-    public int max(TreeNode root) {
-        if (root == null) return Integer.MIN_VALUE;
-        while (root.right != null) {
-            root = root.right;
-        }
-        return root.val;
+    public Long min(TreeNode root){
+        if(root==null) return Long.MAX_VALUE;
+        Long leftmin = min(root.left);
+        Long rightmin = min(root.right);
+        if(rightmin <= root.val) flag = false;
+        return Math.min(root.val,Math.min(leftmin,rightmin));
     }
-
-    public boolean helper(TreeNode root) {
-
-        // ✅ empty tree is valid BST
-        if (root == null) return true;
-
-        // ✅ check current node with left & right subtree
-        if (root.left != null && root.val <= max(root.left))
-            return false;
-
-        if (root.right != null && root.val >= min(root.right))
-            return false;
-
-        // ✅ recursively check left & right subtree
-        return helper(root.left) && helper(root.right);
-    }
-
     public boolean isValidBST(TreeNode root) {
-        return helper(root);
+        flag = true;
+        max(root);
+        min(root);
+        return flag;
     }
 }
