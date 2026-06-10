@@ -1,17 +1,17 @@
 class Solution {
     class Pair{
-        int row,col;
+        int row , col;
         Pair(int row,int col){
             this.row = row;
             this.col = col;
+        
         }
     }
-    public int bfs(int r,int c,int[][]grid){
-        int n = grid.length;
-        int m = grid[0].length;
+    public int orangesRotting(int[][] grid) {
         Queue<Pair> q = new LinkedList<>();
-        int minute = 0 , fresh = 0;
-        for(int i = 0;i<n;i++){
+         int fresh = 0,minutes = 0;
+         int n = grid.length , m = grid[0].length;
+         for(int i = 0;i<n;i++){
             for(int j = 0;j<m;j++){
                 if(grid[i][j]==2){
                     q.add(new Pair(i,j));
@@ -19,32 +19,28 @@ class Solution {
                     fresh++;
                 }
             }
-        }
-        int [][]direction = {{0,1},{1,0},{-1,0},{0,-1}};
-        while(q.size()>0 && fresh>0){
+         }
+         int[][]directions = {{1,0},{0,1},{-1,0},{0,-1}};
+         while(q.size()>0){
             int size = q.size();
-            minute++;
+            boolean rottenthislevel = false;
             for(int i = 0;i<size;i++){
                 Pair p = q.poll();
-                boolean rottanlevel = false;
-                for(int[]d : direction){
+                for(int[]d : directions){
                     int nr = p.row + d[0];
                     int nc = p.col + d[1];
-                    if(nr>=0 && nc>=0 && nr<n && nc<m && grid[nr][nc]==1){
-                        rottanlevel = true;
+                    if(nr>=0 && nr<n && nc>=0 && nc<m && grid[nr][nc]==1){
                         grid[nr][nc] = 2;
+                        rottenthislevel = true;
                         fresh--;
                         q.add(new Pair(nr,nc));
 
                     }
                 }
             }
-            
-        }
-        if(fresh==0) return minute;
-        return -1;
-    }
-    public int orangesRotting(int[][] grid) {
-        return bfs(0,0,grid);
+            if(rottenthislevel) minutes++;
+         }
+         if(fresh==0) return minutes;
+         else return -1;
     }
 }
