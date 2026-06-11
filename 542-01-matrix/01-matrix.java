@@ -1,49 +1,37 @@
 class Solution {
     class Pair{
-        int row , col ;
+        int row, col;
         Pair(int row,int col){
             this.row = row;
             this.col = col;
         }
     }
-    public void bfs(int r,int c ,boolean[][]visited,int[][]mat){
-        int n = mat.length;
-        int m = mat[0].length;
+    public int[][] updateMatrix(int[][] mat) {
+        int n = mat.length , m = mat[0].length;
+        int[][] dist = new int[n][m];
         Queue<Pair> q = new LinkedList<>();
         for(int i = 0;i<n;i++){
-            for(int j = 0;j<m;j++){
+            for(int j = 0;j<m ;j++){
                 if(mat[i][j]==0){
-                    q.add(new Pair(i,j));
+                    q.offer(new Pair(i,j));
+                }else if(mat[i][j]==1){
+                    dist[i][j] = -1;
                 }
-                else if(mat[i][j]==1){
-                    visited[i][j]=true;
-                }
-            
             }
         }
-        int[][] direction = {{1,0},{-1,0},{0,1},{0,-1}};
+        int[][] directions = {{0,1},{1,0},{-1,0},{0,-1}};
         while(q.size()>0){
-                Pair p = q.poll();
-                int curRow = p.row;
-                int curCol = p.col;
-                for(int[]d : direction ){
-                    int nr = curRow + d[0];
-                    int nc = curCol + d[1];
-                    if(nr>=0 && nc>=0 && nr<n && nc<m && mat[nr][nc]==1 && visited[nr][nc]==true){
-                        mat[nr][nc] = mat[curRow][curCol] + 1;
-                        visited[nr][nc] = false;
-                        q.add(new Pair(nr,nc));
-                        
-                    }
+            Pair p = q.poll();
+            for(int[]d: directions){
+                int nr = p.row + d[0];
+                int nc = p.col + d[1];
+                if(nr>=0 && nc>=0 && nr<n && nc<m && dist[nr][nc]==-1){
+                    dist[nr][nc] = dist[p.row][p.col]+ 1;
+                    q.add(new Pair(nr,nc));
                 }
-            
+            }
         }
-    }
-    public int[][] updateMatrix(int[][] mat) {
-        int n = mat.length;
-        int m = mat[0].length;
-        boolean[][]visited = new boolean[n][m];
-        bfs(0,0,visited,mat);
-        return mat;
+        return dist;
+        
     }
 }
