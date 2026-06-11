@@ -1,21 +1,22 @@
 class Solution {
-    public int coinChange(int[] coins, int amount) {
-        int[][]dp = new int[coins.length+1][amount+1];
-        for(int[]row : dp) Arrays.fill(row,Integer.MAX_VALUE-1);
-      for(int i = 0;i<dp.length;i++){
-        dp[i][0] = 0;
-      }
-        int n = dp.length , m = dp[0].length;
-        for(int i = 1;i<n;i++){
-            for(int j = 1;j<m;j++){
-                if(j-coins[i-1]<0){
-                    dp[i][j] = dp[i-1][j];
-                }else{
-                    dp[i][j]  = Math.min(1 + dp[i][j-coins[i-1]],dp[i-1][j]);
-                }
-            }
+    public int helper(int i ,int[] coins, int amount,int[][]dp){
+        if(i==coins.length){
+            if(amount==0) return 0;
+            else return Integer.MAX_VALUE-1;
         }
-        if(dp[n-1][m-1]==Integer.MAX_VALUE-1) return -1;
-        return dp[n-1][m-1];
+        if(dp[i][amount]!=-1) return dp[i][amount];
+        int take = Integer.MAX_VALUE;
+        if(coins[i]<=amount){
+           take = 1 + helper(i,coins,amount-coins[i],dp);
+        }
+     int   nottake = helper(i+1,coins,amount,dp);
+      return   dp[i][amount] = Math.min(take,nottake);
+    }
+    public int coinChange(int[] coins, int amount) {
+        int[][]dp = new int[coins.length][amount+1];
+        for(int[]row : dp) Arrays.fill(row,-1);
+       int ans = helper(0,coins,amount,dp);
+       if(ans==Integer.MAX_VALUE-1) return -1;
+       else return ans;
     }
 }
