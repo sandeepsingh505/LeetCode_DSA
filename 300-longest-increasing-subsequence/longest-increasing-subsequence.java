@@ -1,18 +1,18 @@
 class Solution {
-    public int  lis(int i,int prev ,int[]arr,int[][]dp){
-        if(i==arr.length) return 0;
-        if(dp[i][prev+1]!=-1)return dp[i][prev+1];
-        int skip =  lis(i+1,prev,arr,dp);
+    public int solve(int curr, int prev,int[]nums,int[][]dp){
+        if(curr>=nums.length) return 0;
+        if(dp[curr][prev+1]!=-1) return dp[curr][prev+1];
         int take = 0;
-        if(prev == -1 || arr[i]>arr[prev]){
-            take = 1 + lis(i+1,i,arr,dp);
+        if(prev==-1 || nums[prev]< nums[curr]){
+            take = 1 + solve(curr+1,curr,nums,dp);
         }
-        return dp[i][prev+1] = Math.max(take,skip);
+        int nottake = solve(curr+1,prev,nums,dp);
+        return dp[curr][prev+1] = Math.max(take,nottake);
+
     }
     public int lengthOfLIS(int[] nums) {
-        int n = nums.length;
-        int[][]dp = new int [n][n+1];
-        for(int[] row : dp) Arrays.fill(row,-1);
-        return lis(0,-1,nums,dp);
+        int[][]dp = new int[nums.length][nums.length+1];
+        for(int[]row : dp) Arrays.fill(row,-1);
+        return solve(0,-1,nums,dp);
     }
 }
