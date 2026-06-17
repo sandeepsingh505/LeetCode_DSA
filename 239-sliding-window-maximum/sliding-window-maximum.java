@@ -13,9 +13,9 @@ class Solution {
             while(dq.size()>0 && nums[dq.peekLast()]<=nums[i]){
                 dq.pollLast();
             }
-            dq.offerLast(i);
+            dq.offerLast(i);  // add indices 
             if(i>=k-1){
-                ans[idx++] = nums[dq.peekFirst()];
+                ans[idx++] = nums[dq.peekFirst()]; // update answer
             }
         }
         return ans;
