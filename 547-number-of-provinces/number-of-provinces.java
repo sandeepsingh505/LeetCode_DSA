@@ -1,40 +1,41 @@
 class Solution {
-    class DSU{
-        int parent[];
-       DSU(int n){
-    parent = new int[n];
-    for(int i = 0; i < n; i++){
-        parent[i] = i;
-    }
-}
-        public void union(int a,int b){
-            int pa = find(a);
-            int pb = find(b);
-            if(pa!=pb) parent[pb] = pa;
-        }
-        public int find(int i){
-            if(parent[i]==i){
-                return i;
+public void bfs(int start,ArrayList<ArrayList<Integer>> adj, boolean[]visited){
+    Queue<Integer> q = new LinkedList<>();
+    visited[start] = true;
+    q.add(start);
+    while(q.size()>0){
+        int node = q.poll();
+        for(int neigh : adj.get(node)){
+            if(!visited[neigh]){
+                visited[neigh] = true;
+                q.add(neigh);
             }
-            return parent[i] = find(parent[i]);
         }
-
-    }
-    public int findCircleNum(int[][] isConnected) {
-        int n = isConnected.length;
-        DSU obj = new DSU(n);
-        int count = n;
-        for(int i = 0;i<n;i++){
-            for(int j = i+1;j<n;j++){
-                if(isConnected[i][j] == 1){
-              if(obj.find(i) != obj.find(j)){
-            obj.union(i, j);
-             count--;
     }
 }
+    public int findCircleNum(int[][] isConnected) {
+ ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+ for(int i = 0;i<isConnected.length;i++){
+    adj.add(new ArrayList<>());
+ }
+ for(int i = 0;i<isConnected.length;i++){
+    for(int j = 0;j<isConnected[0].length;j++){
+        if(isConnected[i][j]==1){
+            adj.get(i).add(j);
+            adj.get(j).add(i);
         }
-       
     }
-    return count;
+ }
+    int count = 0;
+    boolean visited[] = new boolean [isConnected.length];
+    for(int i = 0;i<adj.size();i++){
+        if(!visited[i]){
+            bfs(i,adj,visited);
+            count++;
+        }
     }
+
+ return count;
+        
     }
+}
