@@ -14,26 +14,24 @@
  * }
  */
 class Solution {
-    public int levels(TreeNode root){
-        if(root==null)return 0;
-        int lst = levels(root.left);
-        int rst = levels(root.right);
-        return 1 + Math.max(lst,rst);
-    }
-    public void preorderlevel(TreeNode root,int level,int lvl , List<Integer>ans){
-        if(root==null) return ;
-        if(level==lvl) ans.add(root.val);
-        preorderlevel(root.left,level+1,lvl,ans);
-        preorderlevel(root.right,level+1,lvl,ans);
-    }
     public List<List<Integer>> levelOrder(TreeNode root) {
+        if(root==null) return new ArrayList<>();
         List<List<Integer>> ans = new ArrayList<>();
-        int lvl = levels(root);
-        for(int i = 0;i<lvl;i++){
-            List<Integer> arr = new ArrayList<>();
-            preorderlevel(root,0,i,arr);
-            ans.add(arr);
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while(q.size()>0){
+            int size = q.size();
+            List<Integer> curr = new ArrayList<>();
+            for(int i = 0;i<size;i++){
+                TreeNode node = q.poll();
+                curr.add(node.val);
+                if(node.left!=null) q.add(node.left);
+                if(node.right!=null)q.add(node.right);
+            }
+            ans.add(curr);
+            
         }
         return ans;
+        
     }
 }
