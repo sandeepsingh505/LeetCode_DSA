@@ -11,17 +11,33 @@
  */
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        HashSet<ListNode> st = new HashSet<>();
-        while(headA!=null){
-            st.add(headA);
-            headA = headA.next;
+        // approach : length difference  method
+        int lenA = length(headA);
+        int lenB = length(headB);
+        while(lenA > lenB){
+            headA  = headA.next;
+            lenA--;
         }
-        while(headB!=null){
-            if(st.contains(headB)){
+        while(lenB > lenA){
+            headB = headB.next;
+            lenB--;
+        }
+        while(headA!=null && headB!=null){
+            if(headA==headB) {
                 return headB;
             }
+            headA = headA.next;
             headB = headB.next;
         }
         return null;
     }
+    public int length(ListNode head){
+        int count = 0;
+        while(head!=null){
+            count++;
+            head = head.next;
+        }
+         return count;
+    }
+   
 }
