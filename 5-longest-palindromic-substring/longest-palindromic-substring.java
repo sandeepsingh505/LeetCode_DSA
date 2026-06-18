@@ -1,41 +1,22 @@
 class Solution {
-    public String longestPalindrome(String s) {
-    int n = s.length();
-    if (n == 0) return "";
-
-    int[][] dp = new int[n][n];
-    int maxLen = 1;
     int start = 0;
-
-    for (int k = 0; k < n; k++) {
-        int i = 0, j = k;
-        while (j < n) {
-
-            if (i == j) {
-                dp[i][j] = 1;
-            } 
-            else if (j == i + 1) {
-                if (s.charAt(i) == s.charAt(j)) {
-                    dp[i][j] = 1;
-                }
-            } 
-            else {
-                if (s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1] == 1) {
-                    dp[i][j] = 1;
-                }
-            }
-
-            // 👉 longest substring update
-            if (dp[i][j] == 1 && (j - i + 1) > maxLen) {
-                maxLen = j - i + 1;
-                start = i;
-            }
-
-            i++;
-            j++;
+    int maxlen = 0;
+    public String longestPalindrome(String s) {
+        for(int  i = 0;i<s.length();i++){
+            expand(s,i,i);
+            expand(s,i,i+1);
+        }
+        return s.substring(start,start+maxlen);
+    }
+    public void expand(String s,int left,int right){
+        while(left >=0 && right <s.length()&& s.charAt(left)==s.charAt(right)){
+            left--;
+            right++;
+        }
+        int len = right-left-1;
+        if(len > maxlen){
+            maxlen = len;
+            start = left+1;
         }
     }
-    return s.substring(start, start + maxLen);
-}
-
 }
