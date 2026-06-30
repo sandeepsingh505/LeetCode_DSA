@@ -1,51 +1,43 @@
 class NumArray {
-    int seg[];
-    int n ;
-    public void build(int i,int left ,int right,int[]arr){
-        if(left==right){
-            seg[i] = arr[left];
-            return;
-        }
-        int mid = left +(right-left)/2;
-        build(2*i+1,left,mid,arr);
-        build(2*i+2,mid+1,right,arr);
-        seg[i] = seg[2*i+1] + seg[2*i+2];
-    }
+int[]seg;
+int n ;
     public NumArray(int[] nums) {
         n = nums.length;
         seg = new int[4*n];
-        build(0,0,n-1,nums);
-        
+        build(nums,0,0,n-1);
     }
-public void myupdate(int i,int start,int end,int index,int val){
-    if(start==end){
-         seg[i] = val;
-         return;
+    public void build(int[]arr,int i,int s,int e){
+        if(s==e){
+            seg[i] = arr[s];
+            return;
+        }
+        int mid = (s+e)/2;
+        build(arr,2*i+1,s,mid);
+        build(arr,2*i+2,mid+1,e);
+        seg[i] = seg[2*i+1] + seg[2*i+2];
     }
-    int mid = start +(end-start)/2;
-    if(index<=mid){
-        myupdate(2*i+1,start,mid,index,val);
-    }else{
-        myupdate(2*i+2,mid+1,end,index,val);
+    public void updatetree(int idx , int val ,int i,int s,int e){
+        if(s==e){
+            seg[i] = val;
+            return;
+        }
+        int mid = (s+e)/2;
+        if(idx<=mid){
+            updatetree(idx,val,2*i+1,s,mid);
+        }else{
+            updatetree(idx,val,2*i+2,mid+1,e);
+        }
+        seg[i] = seg[2*i+1] + seg[2*i+2];
     }
-    seg[i] = seg[2*i+1] + seg[2*i+2];
-}
     public void update(int index, int val) {
-     myupdate(0,0,n-1,index,val);
+        updatetree(index,val,0,0,n-1);
     }
-    public int query(int i,int start,int end,int l,int r){
-        // case1 out of bound
-        if(end<l || r<start){
-            return 0;
-        }
-        // case2 complete inside 
-        if(l<=start && end<=r){
-             return seg[i];
-        }
-        // case3 partial inside
-        int mid = start +(end-start)/2;
-        int left = query(2*i+1,start,mid,l,r);
-        int right = query(2*i+2,mid+1,end,l,r);
+    public int query(int i,int s,int e,int l , int r){
+        if(r<s|| e < l ) return 0;
+        if(l<=s && e<=r) return seg[i];
+        int mid = (s+e)/2;
+        int left = query(2*i+1,s,mid,l,r);
+        int right = query(2*i+2,mid+1,e,l,r);
         return left + right;
     }
     public int sumRange(int left, int right) {
