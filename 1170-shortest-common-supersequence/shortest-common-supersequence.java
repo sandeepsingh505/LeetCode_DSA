@@ -33,6 +33,7 @@ class Solution {
             result.append(str2.charAt(j-1));
             j--;
         }
+        System.out.println(n+m-dp[n][m]);
         return result.reverse().toString();
     }
 }
