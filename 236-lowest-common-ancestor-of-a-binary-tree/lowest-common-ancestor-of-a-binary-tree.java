@@ -8,18 +8,13 @@
  * }
  */
 class Solution {
-    public boolean exists(TreeNode root,TreeNode node){
-        if(node==root) return true;
-        if(root==null) return false;
-        return exists(root.left,node) || exists(root.right,node);
-    }
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if(p==root || q==root) return root;
-        boolean pinlst = exists(root.left,p);
-        boolean qinlst = exists(root.left,q);
-        if(pinlst==true && qinlst==true) return lowestCommonAncestor(root.left,p,q);
-        if(pinlst==false && qinlst==false)  return lowestCommonAncestor(root.right,p,q);
-        else return root;
-        
+        if(root==null) return null;
+        if(root==p || root==q) return root;
+        TreeNode left = lowestCommonAncestor(root.left,p,q);
+        TreeNode right = lowestCommonAncestor(root.right,p,q);
+        if(left!=null && right!=null) return root;
+        if(left!=null) return left;
+        return right;
     }
 }
