@@ -10,22 +10,21 @@
  */
 class Solution {
     public boolean isPalindrome(ListNode head) {
-        // convert it into arraylist and then use two pointer for checking 
-        ArrayList<Integer> arr = new ArrayList<>();
+        // store node  into stack 
+        Stack<Integer> st = new Stack<>();
         ListNode temp = head;
         while(temp!=null){
-            arr.add(temp.val);
+            st.push(temp.val);
             temp = temp.next;
         }
-        int left = 0;
-        int right = arr.size()-1;
-        while(left<right){
-            if(!arr.get(left).equals(arr.get(right))){
+        temp = head;
+        while(temp!=null){
+            if(temp.val != st.pop()){
                 return false;
             }
-            left++;
-            right--;
+        temp = temp.next;
         }
         return true;
+       
     }
 }
