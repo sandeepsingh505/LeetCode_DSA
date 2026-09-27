@@ -9,32 +9,25 @@
  * }
  */
 class Solution {
-    public ListNode rotateRight(ListNode head, int k) {  
-        if (head == null || head.next == null) return head;
-        ListNode temp = head;
+    public ListNode rotateRight(ListNode head, int k) {
+        // assume as circular list and perform k%n operations
+        if(head==null|| head.next==null||k==0) return head;
         int length = 1;
-        while(temp.next!=null){
+        ListNode tail = head;
+        while(tail.next!=null){
             length++;
-            temp = temp.next;
-           
+            tail = tail.next;
         }
-        k = k % length;
-        if(k == 0) return head;
-        ListNode curr = head;
-        
-        for(int i = 0;i<(length-k-1);i++){
-          curr = curr.next;
+        k = k%length;
+        if(k==0) return head;
+        tail.next = head;
+        ListNode newTail = head;
+        int newtailsteps = length-k;
+        for(int i = 1;i<newtailsteps;i++){
+            newTail = newTail.next;
         }
-          ListNode sh = null;
-          sh = curr.next;
-          curr.next = null;
-
-          temp.next = head;
-         
-          return sh;
-            
-          
-       
-        
+        ListNode newHead = newTail.next;
+        newTail.next = null;
+      return newHead;
     }
 }
