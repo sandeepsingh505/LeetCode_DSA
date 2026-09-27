@@ -10,22 +10,40 @@
  */
 class Solution {
     public ListNode sortList(ListNode head) {
-        if(head==null) return head;
-        ArrayList<ListNode> arr = new ArrayList<>();
-        ListNode curr = head;
-        while(curr!=null){
-            arr.add(curr);
-            curr = curr.next;
+        // using merge sort 
+        if(head == null || head.next==null) return head;
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast.next!=null && fast.next.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
         }
-        Collections.sort(arr,(a,b)-> a.val-b.val);
-        ListNode newHead = arr.get(0);
-        curr = newHead;
-        for(int i = 1;i<arr.size();i++){
-            curr.next = arr.get(i);
-            curr = curr.next;
+        ListNode righthalf = slow.next;
+        slow.next = null;
+
+        ListNode left = sortList(head);
+        ListNode right = sortList(righthalf);
+        return merge(left,right);
+    }
+    public ListNode merge(ListNode l1,ListNode l2){
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+        while(l1!=null && l2!=null){
+            if(l1.val<=l2.val){
+                curr.next = l1;
+                l1 = l1.next;
+                curr = curr.next;
+            }else{
+                curr.next = l2;
+                l2 = l2.next;
+                curr = curr.next;
+            }
         }
-        curr.next = null;
-        return newHead;
-        
+        if(l1!=null){
+            curr.next = l1;
+        }if(l2!=null) {
+            curr.next = l2;
+        }
+        return dummy.next;
     }
 }
