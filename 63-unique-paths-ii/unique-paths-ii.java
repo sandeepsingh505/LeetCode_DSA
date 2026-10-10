@@ -1,18 +1,26 @@
 class Solution {
-    public int uniquepath(int i,int j,int arr[][],int dp[][]){
-        if(i>=arr.length || j>=arr[0].length) return 0;
-        if(arr[i][j]==1)return 0;
-        if(i==arr.length-1 && j==arr[0].length-1) return 1;
-        if(dp[i][j]!=-1) return dp[i][j];
-        int down = uniquepath(i+1,j,arr,dp);
-        int right = uniquepath(i,j+1,arr,dp);
-        return dp[i][j] = down + right;
-
-    }
-    public int uniquePathsWithObstacles(int[][] arr) {
-        int dp[][] = new int[arr.length][arr[0].length];
-        for(int[]row : dp) Arrays.fill(row,-1);
-        return uniquepath(0,0,arr,dp);
-        
+    public int uniquePathsWithObstacles(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][]dp = new int[m][n];
+        if(grid[0][0]==1){
+            return 0;
+        }
+        dp[0][0] = 1;
+        for(int i = 0;i<m;i++){
+            for(int j = 0;j<n;j++){
+                if(grid[i][j]==1){
+                    dp[i][j] = 0;
+                    continue;
+                }
+                if(i>0){
+                    dp[i][j] += dp[i-1][j];
+                }
+                if(j>0){
+                    dp[i][j] += dp[i][j-1];
+                }
+            }
+        }
+        return dp[m-1][n-1];
     }
 }
