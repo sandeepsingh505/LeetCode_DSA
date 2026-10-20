@@ -1,9 +1,15 @@
 class Solution {
     public int missingNumber(int[] nums) {
-        int n = nums.length;
-        int totalsum = n * (n+1)/2;
-        int arrsum = 0;
-        for(int num : nums) arrsum += num;
-        return totalsum-arrsum;
+        HashSet<Integer> st = new HashSet<>();
+        for(int i = 0;i<nums.length;i++){
+            st.add(nums[i]);
+        }
+        for(int i = 0;i<=nums.length;i++){
+            if(!st.contains(i)){
+                return i;
+            }
+
+        }
+        return -1;
     }
 }
