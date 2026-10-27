@@ -1,6 +1,5 @@
 class Solution {
     public int compress(char[] chars) {
-        // inplace using two pointer 
         int read = 0,write = 0;
         while(read<chars.length){
             char current = chars[read];
@@ -10,11 +9,11 @@ class Solution {
                 count++;
             }
             chars[write++] = current;
-            if(count>1){
-                String countstr = String.valueOf(count);
-                for(char c : countstr.toCharArray()){
-                    chars[write++] = c;
-                }
+            if(count >1){
+               String str = String.valueOf(count);
+               for(char c : str.toCharArray()){
+                chars[write++] = c;
+               }
             }
         }
         return write;
